@@ -2,7 +2,10 @@ return {
 	{
 		"williamboman/mason.nvim",
 		config = function()
-			require("mason").setup()
+			require("mason").setup({
+				PATH = "prepend",
+				cmd = vim.fn.exepath("jdtls"),
+			})
 		end,
 	},
 	{
@@ -24,12 +27,16 @@ return {
 			})
 			lspconfig.tsserver.setup({
 				capabilites = capabilities,
+				on_attach = function(client)
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+				end,
 			})
 
 			lspconfig.eslint.setup({
 				capabilites = capabilities,
 			})
-      
+
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})

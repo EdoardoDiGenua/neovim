@@ -8,5 +8,15 @@ return {
   },
   config = function()
     vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left<CR>", {})
+    vim.keymap.set("n", "<C-s>", ":Neotree close<CR>", {})
+    require("neo-tree").setup({
+      close_if_last_window = true,
+      buffers = {
+        follow_current_file = true,
+      },
+      filesystem = {
+        follow_current_file = true,
+      },
+    })
   end,
 }
