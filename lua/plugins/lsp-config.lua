@@ -9,19 +9,20 @@ return {
 		end,
 	},
 	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "tsserver", "eslint" },
-			})
-		end,
-	},
-	{
 		"neovim/nvim-lspconfig",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"j-hui/fidget.nvim",
+		},
 		config = function()
+			require("fidget").setup({})
+			local mason_lspconfig = require("mason-lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
 
+			mason_lspconfig.setup({
+				ensure_installed = { "lua_ls", "tsserver", "eslint" },
+			})
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 			})
