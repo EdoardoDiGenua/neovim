@@ -1,6 +1,7 @@
 return {
   "norcalli/nvim-colorizer.lua",
   config = function()
+    --Always set the file types on which to act explicitly otherwise telescope will bug
     require("colorizer").setup({ "css", "javascript", "lua", "vim", "toml", "svelte", "typescript" }, {
       RGB = true,       -- #RGB hex codes
       RRGGBB = true,    -- #RRGGBB hex codes

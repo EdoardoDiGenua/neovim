@@ -7,6 +7,7 @@ return {
 	init = function()
 		vim.keymap.set("n", "<C-b>", ":BufferPrevious<CR>", {})
 		vim.keymap.set("n", "<C-a>", ":BufferNext<CR>", {})
+		vim.keymap.set("n", "<Leader>bc", ":BufferClose<CR>", {})
 		vim.g.barbar_auto_setup = false
 	end,
 	opts = {
