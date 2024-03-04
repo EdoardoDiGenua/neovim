@@ -48,6 +48,10 @@ return {
         },
       })
 
+      lspconfig.eslint.setup({
+        capabilities = capabilities,
+      })
+
       lspconfig.tsserver.setup({
         capabilites = capabilities,
         on_attach = function(client)
@@ -84,35 +88,25 @@ return {
       })
 
       vim.diagnostic.config({
-        --update_in_insert = true,
+        virtual_text = false,
+        signs = true,
+        underline = true,
         float = {
           focusable = false,
-          style = "minimal",
           border = "rounded",
           source = "always",
-          header = "",
-          prefix = "",
+          show_header = "true",
         },
       })
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
-
+      vim.keymap.set("n", "<Leader>l", vim.diagnostic.open_float, {})
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
         vim.lsp.handlers.hover, {
           border = "single",
         })
     end,
   },
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      vim.diagnostic.config({
-        virtual_text = false,
-      })
-      require("lsp_lines").setup()
-      vim.keymap.set("n", "<Leader>l", require("lsp_lines").toggle,
-        { desc = "Toggle lsp_lines" })
-    end,
-  },
+
 }
