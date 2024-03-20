@@ -8,8 +8,8 @@ return {
         null_ls.builtins.formatting.stylua.with({
           extra_args = { "--column_width", "80" },
         }),
-        null_ls.builtins.formatting.prettier.with({
-          extra_args = { "--print-width", "100" },
+        null_ls.builtins.formatting.prettierd.with({
+          --  extra_args = { "--print-width", "100" },
         }),
       },
       on_attach = function(client, bufnr)
