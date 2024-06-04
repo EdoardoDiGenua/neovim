@@ -53,7 +53,7 @@ return {
       })
 
       lspconfig.tsserver.setup({
-        capabilites = capabilities,
+        capabilities = capabilities,
         on_attach = function(client)
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
