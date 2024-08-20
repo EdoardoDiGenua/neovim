@@ -15,9 +15,13 @@ return {
     },
     config = function()
       local cmp = require("cmp")
+
       local cmp_lsp = require("cmp_nvim_lsp")
+
       local mason_lspconfig = require("mason-lspconfig")
+
       local lspconfig = require("lspconfig")
+
       local capabilities = vim.tbl_deep_extend(
         "force",
         {},
@@ -26,7 +30,10 @@ return {
       )
 
       require("fidget").setup({})
+
       require("mason").setup()
+
+
       mason_lspconfig.setup({
         ensure_installed = { "lua_ls", "tsserver" },
       })
@@ -52,7 +59,30 @@ return {
         capabilities = capabilities,
       })
 
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
+        cmd = { "C:/Users/e.digenua/.cargo/bin/rust-analyzer" },
+        on_attach = function(client, bufnr)
+          if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = augroup,
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format({ async = false })
+              end,
+            })
+          end
+        end,
+      })
+
       lspconfig.tsserver.setup({
+        init_options = {
+          preferences = {
+            importModuleSpecifierPreference = 'none-relative',
+          },
+        },
         capabilities = capabilities,
         on_attach = function(client)
           client.server_capabilities.documentFormattingProvider = false
